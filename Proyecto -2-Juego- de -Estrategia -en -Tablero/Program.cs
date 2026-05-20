@@ -1,4 +1,4 @@
-﻿//Program.cs
+﻿
 using JuegoTablero;
 
 class Program
@@ -7,7 +7,7 @@ class Program
     {
         Login login = new Login();
 
-        //Si el login falla, termina
+  
         if (!login.IniciarSesion())
             return;
 
@@ -33,7 +33,7 @@ class Program
             {
                 case 1:
 
-                    //Crea el juego y lo inicia
+    
                     Juego juego = new Juego();
                     juego.Iniciar();
 
@@ -80,16 +80,16 @@ class Program
         while (opcionmenu != 4);
     }
 }
-// Login.cs
+
 
 namespace JuegoTablero
 {
     public class Login
     {
-        //Contraseña del sistema
+     
         string contralogincorrecta = "CDemo2026##";
 
-        //Función para ocultar contraseña con *
+       
         static string leercontralogin()
         {
             string pass = "";
@@ -122,7 +122,7 @@ namespace JuegoTablero
             return pass;
         }
 
-        //Proceso completo de login
+      
         public bool IniciarSesion()
         {
             string contraseñalogin;
@@ -217,7 +217,7 @@ namespace JuegoTablero
                 turno == 1 ? 2 : 1;
             }
         }
-        //Mover pieza
+    
         public void MoverPieza()
         {
             {
@@ -233,7 +233,6 @@ namespace JuegoTablero
                 Console.WriteLine("Columna destino:");
                 int cd = int.Parse(Console.ReadLine());
 
-                //Validar límites
                 if (fo < 0 || fo > 7 ||
                     co < 0 || co > 7 ||
                     fd < 0 || fd > 7 ||
@@ -247,7 +246,6 @@ namespace JuegoTablero
                 Pieza pieza =
                 tablero.casillas[fo, co];
 
-                //No hay pieza
                 if (pieza == null)
                 {
                     Console.WriteLine("No hay pieza ahí");
@@ -255,7 +253,7 @@ namespace JuegoTablero
                     return;
                 }
 
-                //No es su turno
+              
                 if (pieza.jugador != turno)
                 {
                     Console.WriteLine("Esa pieza no es tuya");
@@ -265,7 +263,6 @@ namespace JuegoTablero
 
                 bool movimientoValido = false;
 
-                //REY
                 if (pieza.tipo == "Rey")
                 {
                     if (Math.Abs(fd - fo) <= 1 &&
@@ -274,8 +271,6 @@ namespace JuegoTablero
                         movimientoValido = true;
                     }
                 }
-
-                //TORRE
                 else if (pieza.tipo == "Torre")
                 {
                     if (fo == fd || co == cd)
@@ -284,13 +279,12 @@ namespace JuegoTablero
                     }
                 }
 
-                //SOLDADO
+      
                 else if (pieza.tipo == "Soldado")
                 {
                     int direccion =
                     pieza.jugador == 1 ? -1 : 1;
 
-                    //Mover normal
                     if (cd == co &&
                         fd == fo + direccion &&
                         tablero.casillas[fd, cd] == null)
@@ -298,7 +292,6 @@ namespace JuegoTablero
                         movimientoValido = true;
                     }
 
-                    //Captura diagonal
                     if (Math.Abs(cd - co) == 1 &&
                         fd == fo + direccion &&
                         tablero.casillas[fd, cd] != null)
@@ -314,7 +307,7 @@ namespace JuegoTablero
                     return;
                 }
 
-                //No capturar pieza propia
+           
                 if (tablero.casillas[fd, cd] != null &&
                     tablero.casillas[fd, cd].jugador == turno)
                 {
@@ -323,7 +316,7 @@ namespace JuegoTablero
                     return;
                 }
 
-                //Capturas
+             
                 Pieza capturada =
                 tablero.casillas[fd, cd];
 
@@ -333,7 +326,7 @@ namespace JuegoTablero
                     "Capturaste un " +
                     capturada.tipo);
 
-                    //Puntajes
+
                     int puntos = 0;
 
                     if (capturada.tipo == "Soldado")
@@ -351,7 +344,6 @@ namespace JuegoTablero
                     else
                         puntosJ2 += puntos;
 
-                    //Guardar mejor jugador
                     if (puntosJ1 > mejorPuntaje)
                     {
                         mejorPuntaje = puntosJ1;
@@ -365,7 +357,7 @@ namespace JuegoTablero
                     }
                 }
 
-                //Mover pieza
+              
                 tablero.casillas[fd, cd] =
                 pieza;
 
@@ -393,7 +385,6 @@ namespace JuegoTablero
     }
 }
 
-//jugador.cs
 namespace JuegoTablero
 {
     public class Jugador
@@ -415,7 +406,7 @@ namespace JuegoTablero
     }
 }
 
-//Pieza.cs
+
 namespace JuegoTablero
 {
     public class Pieza
@@ -441,13 +432,13 @@ namespace JuegoTablero
 {
     public class Tablero
     {
-        //Matriz principal
+       
         public Pieza[,] casillas =
         new Pieza[8, 8];
 
         public void Inicializar()
         {
-            //Vaciar tablero
+           
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -456,14 +447,13 @@ namespace JuegoTablero
                 }
             }
 
-            //Reyes
             casillas[7, 3] =
             new Pieza("Rey", 'R', 1);
 
             casillas[0, 3] =
             new Pieza("Rey", 'r', 2);
 
-            //Torres
+          
             casillas[7, 0] =
             new Pieza("Torre", 'T', 1);
 
@@ -476,7 +466,7 @@ namespace JuegoTablero
             casillas[0, 7] =
             new Pieza("Torre", 't', 2);
 
-            //Soldados
+
             for (int j = 0; j < 4; j++)
             {
                 casillas[6, j * 2] =
