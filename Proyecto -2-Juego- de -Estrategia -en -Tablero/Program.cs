@@ -80,7 +80,7 @@ class Program
         while (opcionmenu != 4);
     }
 }
-/ Login.cs
+// Login.cs
 
 namespace JuegoTablero
 {
@@ -220,12 +220,158 @@ namespace JuegoTablero
         //Mover pieza
         public void MoverPieza()
         {
-            //Aquí pegas la versión corregida
-            //que te envié antes:
-            //MovimientoValido
-            //CaminoLibre
-            //capturas
-            //puntajes
+            {
+                Console.WriteLine("Fila origen:");
+                int fo = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Columna origen:");
+                int co = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Fila destino:");
+                int fd = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Columna destino:");
+                int cd = int.Parse(Console.ReadLine());
+
+                //Validar límites
+                if (fo < 0 || fo > 7 ||
+                    co < 0 || co > 7 ||
+                    fd < 0 || fd > 7 ||
+                    cd < 0 || cd > 7)
+                {
+                    Console.WriteLine("Posición inválida");
+                    Console.ReadLine();
+                    return;
+                }
+
+                Pieza pieza =
+                tablero.casillas[fo, co];
+
+                //No hay pieza
+                if (pieza == null)
+                {
+                    Console.WriteLine("No hay pieza ahí");
+                    Console.ReadLine();
+                    return;
+                }
+
+                //No es su turno
+                if (pieza.jugador != turno)
+                {
+                    Console.WriteLine("Esa pieza no es tuya");
+                    Console.ReadLine();
+                    return;
+                }
+
+                bool movimientoValido = false;
+
+                //REY
+                if (pieza.tipo == "Rey")
+                {
+                    if (Math.Abs(fd - fo) <= 1 &&
+                        Math.Abs(cd - co) <= 1)
+                    {
+                        movimientoValido = true;
+                    }
+                }
+
+                //TORRE
+                else if (pieza.tipo == "Torre")
+                {
+                    if (fo == fd || co == cd)
+                    {
+                        movimientoValido = true;
+                    }
+                }
+
+                //SOLDADO
+                else if (pieza.tipo == "Soldado")
+                {
+                    int direccion =
+                    pieza.jugador == 1 ? -1 : 1;
+
+                    //Mover normal
+                    if (cd == co &&
+                        fd == fo + direccion &&
+                        tablero.casillas[fd, cd] == null)
+                    {
+                        movimientoValido = true;
+                    }
+
+                    //Captura diagonal
+                    if (Math.Abs(cd - co) == 1 &&
+                        fd == fo + direccion &&
+                        tablero.casillas[fd, cd] != null)
+                    {
+                        movimientoValido = true;
+                    }
+                }
+
+                if (!movimientoValido)
+                {
+                    Console.WriteLine("Movimiento inválido");
+                    Console.ReadLine();
+                    return;
+                }
+
+                //No capturar pieza propia
+                if (tablero.casillas[fd, cd] != null &&
+                    tablero.casillas[fd, cd].jugador == turno)
+                {
+                    Console.WriteLine("No puedes capturar tu propia pieza");
+                    Console.ReadLine();
+                    return;
+                }
+
+                //Capturas
+                Pieza capturada =
+                tablero.casillas[fd, cd];
+
+                if (capturada != null)
+                {
+                    Console.WriteLine(
+                    "Capturaste un " +
+                    capturada.tipo);
+
+                    //Puntajes
+                    int puntos = 0;
+
+                    if (capturada.tipo == "Soldado")
+                        puntos = 1;
+
+                    else if (capturada.tipo == "Torre")
+                        puntos = 5;
+
+                    else if (capturada.tipo == "Rey")
+                        puntos = 20;
+
+                    if (turno == 1)
+                        puntosJ1 += puntos;
+
+                    else
+                        puntosJ2 += puntos;
+
+                    //Guardar mejor jugador
+                    if (puntosJ1 > mejorPuntaje)
+                    {
+                        mejorPuntaje = puntosJ1;
+                        mejorJugador = j1.nombre;
+                    }
+
+                    if (puntosJ2 > mejorPuntaje)
+                    {
+                        mejorPuntaje = puntosJ2;
+                        mejorJugador = j2.nombre;
+                    }
+                }
+
+                //Mover pieza
+                tablero.casillas[fd, cd] =
+                pieza;
+
+                tablero.casillas[fo, co] =
+                null;
+            }
         }
 
         public bool VerificarGanador()
