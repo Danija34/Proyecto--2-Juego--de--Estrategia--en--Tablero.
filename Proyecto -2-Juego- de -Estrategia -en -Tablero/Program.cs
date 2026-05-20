@@ -291,3 +291,84 @@ namespace JuegoTablero
         }
     }
 }
+namespace JuegoTablero
+{
+    public class Tablero
+    {
+        //Matriz principal
+        public Pieza[,] casillas =
+        new Pieza[8, 8];
+
+        public void Inicializar()
+        {
+            //Vaciar tablero
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    casillas[i, j] = null;
+                }
+            }
+
+            //Reyes
+            casillas[7, 3] =
+            new Pieza("Rey", 'R', 1);
+
+            casillas[0, 3] =
+            new Pieza("Rey", 'r', 2);
+
+            //Torres
+            casillas[7, 0] =
+            new Pieza("Torre", 'T', 1);
+
+            casillas[7, 7] =
+            new Pieza("Torre", 'T', 1);
+
+            casillas[0, 0] =
+            new Pieza("Torre", 't', 2);
+
+            casillas[0, 7] =
+            new Pieza("Torre", 't', 2);
+
+            //Soldados
+            for (int j = 0; j < 4; j++)
+            {
+                casillas[6, j * 2] =
+                new Pieza(
+                "Soldado",
+                'S',
+                1);
+
+                casillas[1, j * 2] =
+                new Pieza(
+                "Soldado",
+                's',
+                2);
+            }
+        }
+
+        public void Mostrar()
+        {
+            Console.WriteLine(
+            " 0 1 2 3 4 5 6 7");
+
+            for (int i = 0; i < 8; i++)
+            {
+                Console.Write(i + " ");
+
+                for (int j = 0; j < 8; j++)
+                {
+                    if (casillas[i, j] == null)
+                        Console.Write(". ");
+
+                    else
+                        Console.Write(
+                        casillas[i, j]
+                        .simbolo + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+    }
+}
