@@ -80,3 +80,54 @@ class Program
         while (opcionmenu != 4);
     }
 }
+/ Login.cs
+
+namespace JuegoTablero
+{
+    public class Login
+    {
+        //Contraseña del sistema
+        string contralogincorrecta = "CDemo2026##";
+
+        //Función para ocultar contraseña con *
+        static string leercontralogin()
+        {
+            string pass = "";
+            ConsoleKeyInfo tecla;
+
+            do
+            {
+                tecla = Console.ReadKey(true);
+
+                if (tecla.Key != ConsoleKey.Enter &&
+                    tecla.Key != ConsoleKey.Backspace)
+                {
+                    pass += tecla.KeyChar;
+                    Console.Write("*");
+                }
+
+                else if (tecla.Key == ConsoleKey.Backspace &&
+                         pass.Length > 0)
+                {
+                    pass = pass.Substring(
+                    0,
+                    pass.Length - 1);
+
+                    Console.Write("\b \b");
+                }
+
+            }
+            while (tecla.Key != ConsoleKey.Enter);
+
+            return pass;
+        }
+
+        //Proceso completo de login
+        public bool IniciarSesion()
+        {
+            string contraseñalogin;
+
+            do
+            {
+                Console.Clear();
+
