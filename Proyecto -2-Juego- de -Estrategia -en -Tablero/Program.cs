@@ -217,3 +217,77 @@ namespace JuegoTablero
                 turno == 1 ? 2 : 1;
             }
         }
+        //Mover pieza
+        public void MoverPieza()
+        {
+            //Aquí pegas la versión corregida
+            //que te envié antes:
+            //MovimientoValido
+            //CaminoLibre
+            //capturas
+            //puntajes
+        }
+
+        public bool VerificarGanador()
+        {
+            return false;
+        }
+
+        public static void MostrarPuntajeGlobal()
+        {
+            Console.Clear();
+            Console.WriteLine("==========Soldado de Honor==========");
+            Console.WriteLine("El mejor jugador de la sesión es: " + mejorJugador);
+
+            Console.WriteLine("Con un puntaje de: " + mejorPuntaje);
+            Console.WriteLine("=====Presione cualquier tecla para volver al menú=====");
+
+            Console.ReadLine();
+        }
+    }
+}
+
+//jugador.cs
+namespace JuegoTablero
+{
+    public class Jugador
+    {
+        public int id;
+
+        public string nombre;
+
+        public void Registrar(
+        int num)
+        {
+            id = num;
+
+            Console.WriteLine("Nombre del jugador #" + num + ": ");
+
+            nombre =
+            Console.ReadLine();
+        }
+    }
+}
+
+//Pieza.cs
+namespace JuegoTablero
+{
+    public class Pieza
+    {
+        public string tipo;
+
+        public char simbolo;
+
+        public int jugador;
+
+        public Pieza(
+        string tipo,
+        char simbolo,
+        int jugador)
+        {
+            this.tipo = tipo;
+            this.simbolo = simbolo;
+            this.jugador = jugador;
+        }
+    }
+}
