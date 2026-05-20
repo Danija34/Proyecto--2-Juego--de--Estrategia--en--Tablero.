@@ -167,3 +167,53 @@ namespace JuegoTablero
         }
     }
 }
+namespace JuegoTablero
+{
+    public class Juego
+    {
+        public Tablero tablero =
+        new Tablero();
+
+        public Jugador j1 =
+        new Jugador();
+
+        public Jugador j2 =
+        new Jugador();
+
+        public int turno = 1;
+
+        public int puntosJ1 = 0;
+        public int puntosJ2 = 0;
+
+        public static int mejorPuntaje = 0;
+        public static string mejorJugador =
+        "Sin registros";
+
+        public void Iniciar()
+        {
+            j1.Registrar(1);
+            j2.Registrar(2);
+
+            tablero.Inicializar();
+
+            while (true)
+            {
+                Console.Clear();
+
+                tablero.Mostrar();
+
+                Console.WriteLine(
+                "Turno: " +
+                (turno == 1
+                ? j1.nombre
+                : j2.nombre));
+
+                MoverPieza();
+
+                if (VerificarGanador())
+                    break;
+
+                turno =
+                turno == 1 ? 2 : 1;
+            }
+        }
