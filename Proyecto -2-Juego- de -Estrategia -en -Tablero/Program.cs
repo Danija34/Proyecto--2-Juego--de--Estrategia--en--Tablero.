@@ -42,4 +42,41 @@ class Program
                 case 2:
 
                     Console.Clear();
+                    Console.WriteLine("=========================LAS REGLAS=========================");
+                    Console.WriteLine("- El rey se mueve una casilla en cualquier dirección");
+                    Console.WriteLine("- La torre se mueve solo de forma horizontal o vertical");
+                    Console.WriteLine("- El soldado solo avanza una casilla");
+                    Console.WriteLine("- El soldado ataca diagonal");
+                    Console.WriteLine("- Captura al rey y conseguirás la victoria");
+                    Console.WriteLine("========Presiona Cualquier tecla para volver al Menú========");
+                    Console.ReadLine();
 
+                    break;
+
+                case 3:
+
+                    Juego.MostrarPuntajeGlobal();
+
+                    break;
+
+                case 4:
+
+                    Console.WriteLine(
+                    "Saliendo...");
+
+                    break;
+
+                default:
+
+                    Console.WriteLine(
+                    "Opción inválida");
+
+                    Console.ReadLine();
+
+                    break;
+            }
+
+        }
+        while (opcionmenu != 4);
+    }
+}
